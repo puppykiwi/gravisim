@@ -32,6 +32,10 @@ class spacecraft:
         self.vel_y = vel_y
         self.mass = mass
         
+    def move(self, planet=None):
+        self.x += self.vel_x
+        self.y += self.vel_y
+        
     def draw(self):
         pygame.draw.circle(disp, RED, (self.x, self.y), SHIP_SIZE)
 
@@ -53,7 +57,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if temp_pos:
                     t_x, t_y = temp_pos
-                    obj = spacecraft(t_x, t_y, 0, 0, SHIP_MASS )
+                    obj = spacecraft(t_x, t_y, 1, 1, SHIP_MASS )
                     objects.append(obj)
                     temp_pos = None
                     
@@ -68,6 +72,7 @@ def main():
             
         for obj in objects:
             obj.draw()
+            obj.move()
             
             
         pygame.display.update()
