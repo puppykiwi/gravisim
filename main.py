@@ -3,7 +3,7 @@ import pygame
 
 pygame.init()
 
-FPS = 60
+FPS = 120
 WIDTH = 800
 HEIGHT = 600
 
@@ -31,6 +31,7 @@ class spacecraft:
         self.vel_x = vel_x
         self.vel_y = vel_y
         self.mass = mass
+        self.orbit_points = []
     
     def move(self, planet=None):
         distance = math.sqrt((self.x - planet.x)**2 + (self.y - planet.y)**2)
@@ -47,10 +48,16 @@ class spacecraft:
         
         self.x += self.vel_x
         self.y += self.vel_y
+        
+        self.orbit_points.append((self.x, self.y))
+
+        if len(self.orbit_points) > 150:
+            self.orbit_points.pop(0)
 
     def draw(self):
+        for point in self.orbit_points:
+            pygame.draw.circle(disp, WHITE, (int(point[0]), int(point[1])), 1)
         pygame.draw.circle(disp, RED, (self.x, self.y), SHIP_SIZE)
-
 class Planet:
     def __init__(self, x, y, mass):
         self.x = x
@@ -67,7 +74,7 @@ def create_ship(Location, mouse):
     m_x, m_y = mouse
     vel_x = (m_x - t_x) / VEL_SCALE
     vel_y = (m_y - t_y) / VEL_SCALE
-    obj = spacecraft(t_x, t_y, vel_x, vel_y, SHIP_MASS)
+    obj = spacecraft(t_x, t_y, vel_x, vel_y, SHIP_MASS) #class call
     return obj
 
 
