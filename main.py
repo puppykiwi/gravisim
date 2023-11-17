@@ -88,6 +88,15 @@ def control(key):
     elif (key == pygame.K_DOWN) & (VEL_SCALE < 100):
         VEL_SCALE += 10
         print("Velocity: ", int((10 - (VEL_SCALE / 10))))
+        
+    global G
+    if (key == pygame.K_RIGHT) & (G < 11):
+        G += 1
+        print("Gravity: ", G)
+        
+    elif (key == pygame.K_LEFT) & (G > 1):
+        G -= 1
+        print("Gravity: ", G)
 
 def main():
     running = True
