@@ -11,7 +11,7 @@ disp = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Gravitation Slingshot Effect")
 pygame.display.set_icon(pygame.image.load("assets/jupiter.png"))
 
-G = 10
+G = 5
 SHIP_SIZE = 5
 PLANET_SIZE = 50
 SHIP_MASS = 5
@@ -19,6 +19,7 @@ PLANET_MASS = 100
 VEL_SCALE = 100
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
+GREY = (122, 122, 122)
 WHITE = (255, 255, 255)
 
 BACKGROUND = pygame.transform.scale(pygame.image.load("assets/background.jpg"), (WIDTH, HEIGHT))
@@ -56,8 +57,9 @@ class spacecraft:
 
     def draw(self):
         for point in self.orbit_points:
-            pygame.draw.circle(disp, WHITE, (int(point[0]), int(point[1])), 1)
+            pygame.draw.circle(disp, GREY, (int(point[0]), int(point[1])), 1)
         pygame.draw.circle(disp, RED, (self.x, self.y), SHIP_SIZE)
+
 class Planet:
     def __init__(self, x, y, mass):
         self.x = x
@@ -77,6 +79,15 @@ def create_ship(Location, mouse):
     obj = spacecraft(t_x, t_y, vel_x, vel_y, SHIP_MASS) #class call
     return obj
 
+def control(key):
+    global VEL_SCALE
+    if (key == pygame.K_UP) & (VEL_SCALE > 10):
+        VEL_SCALE -= 10
+        print("Velocity: ", int((10 - (VEL_SCALE / 10))))
+        
+    elif (key == pygame.K_DOWN) & (VEL_SCALE < 100):
+        VEL_SCALE += 10
+        print("Velocity: ", int((10 - (VEL_SCALE / 10))))
 
 def main():
     running = True
@@ -102,6 +113,9 @@ def main():
                     
                 else:
                     temp_pos = mouse_pos
+                    
+            if event.type == pygame.KEYDOWN:
+                control(event.key)
         
         disp.blit(BACKGROUND, (0, 0))
         
