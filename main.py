@@ -52,7 +52,7 @@ def main():
     running = True
     clk = pygame.time.Clock()
     
-    planet = Planet(WIDTH // 2, HEIGHT // 2, PLANET_MASS, disp, PLANET)
+    planet = Planet(WIDTH // 2, HEIGHT // 2, PLANET_MASS, disp,)
     objects = []
     temp_pos = None
     
