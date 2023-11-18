@@ -1,49 +1,16 @@
 import math
-from util import *
 import pygame
+
+from util import *
 from planet import Planet
+from spacecraft import Spacecraft
 
 
-pygame.init()
 global disp
+pygame.init()
 disp = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Gravitation Slingshot Effect")
 pygame.display.set_icon(pygame.image.load("assets/jupiter.png"))
-
-class spacecraft:
-    def __init__(self, x, y, vel_x, vel_y, mass):
-        self.x = int(x)
-        self.y = int(y)
-        self.vel_x = vel_x
-        self.vel_y = vel_y
-        self.mass = mass
-        self.orbit_points = []
-    
-    def move(self, planet=None):
-        distance = math.sqrt((self.x - planet.x)**2 + (self.y - planet.y)**2)
-        force = (G * self.mass* planet.mass) / distance ** 2
-        accel = force / self.mass
-        
-        theta = math.atan2(planet.y - self.y, planet.x - self.x)
-        
-        accel_x = accel * math.cos(theta)
-        accel_y = accel * math.sin(theta)
-        
-        self.vel_x += accel_x
-        self.vel_y += accel_y
-        
-        self.x += self.vel_x
-        self.y += self.vel_y
-        
-        self.orbit_points.append((self.x, self.y))
-
-        if len(self.orbit_points) > 150:
-            self.orbit_points.pop(0)
-
-    def draw(self):
-        for point in self.orbit_points:
-            pygame.draw.circle(disp, GREY, (int(point[0]), int(point[1])), 1)
-        pygame.draw.circle(disp, RED, (self.x, self.y), SHIP_SIZE)
 
 # class Planet:
 #     def __init__(self, x, y, mass):
@@ -53,15 +20,13 @@ class spacecraft:
     
 #     def draw(self):
 #         disp.blit(PLANET, (self.x - PLANET_SIZE, self.y - PLANET_SIZE))
-        
-        
 
 def create_ship(Location, mouse):
     t_x, t_y = Location
     m_x, m_y = mouse
     vel_x = (m_x - t_x) / VEL_SCALE
     vel_y = (m_y - t_y) / VEL_SCALE
-    obj = spacecraft(t_x, t_y, vel_x, vel_y, SHIP_MASS) #class call
+    obj = Spacecraft(t_x, t_y, vel_x, vel_y, SHIP_MASS, disp) #class call
     return obj
 
 def control(key):
