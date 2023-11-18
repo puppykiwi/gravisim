@@ -1,29 +1,14 @@
 import math
+from util import *
 import pygame
+from planet import Planet
+
 
 pygame.init()
-
-FPS = 120
-WIDTH = 800
-HEIGHT = 600
-
+global disp
 disp = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Gravitation Slingshot Effect")
 pygame.display.set_icon(pygame.image.load("assets/jupiter.png"))
-
-G = 5
-SHIP_SIZE = 5
-PLANET_SIZE = 50
-SHIP_MASS = 5
-PLANET_MASS = 100
-VEL_SCALE = 100
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
-GREY = (122, 122, 122)
-WHITE = (255, 255, 255)
-
-BACKGROUND = pygame.transform.scale(pygame.image.load("assets/background.jpg"), (WIDTH, HEIGHT))
-PLANET = pygame.transform.scale(pygame.image.load("assets/jupiter.png"), (PLANET_SIZE * 2, PLANET_SIZE * 2))
 
 class spacecraft:
     def __init__(self, x, y, vel_x, vel_y, mass):
@@ -60,14 +45,14 @@ class spacecraft:
             pygame.draw.circle(disp, GREY, (int(point[0]), int(point[1])), 1)
         pygame.draw.circle(disp, RED, (self.x, self.y), SHIP_SIZE)
 
-class Planet:
-    def __init__(self, x, y, mass):
-        self.x = x
-        self.y = y
-        self.mass = mass
+# class Planet:
+#     def __init__(self, x, y, mass):
+#         self.x = x
+#         self.y = y
+#         self.mass = mass
     
-    def draw(self):
-        disp.blit(PLANET, (self.x - PLANET_SIZE, self.y - PLANET_SIZE))
+#     def draw(self):
+#         disp.blit(PLANET, (self.x - PLANET_SIZE, self.y - PLANET_SIZE))
         
         
 
@@ -102,7 +87,7 @@ def main():
     running = True
     clk = pygame.time.Clock()
     
-    planet = Planet(WIDTH // 2, HEIGHT // 2, PLANET_MASS)
+    planet = Planet(WIDTH // 2, HEIGHT // 2, PLANET_MASS, disp, PLANET)
     objects = []
     temp_pos = None
     
