@@ -9,17 +9,10 @@ from spacecraft import Spacecraft
 global disp
 pygame.init()
 disp = pygame.display.set_mode((WIDTH, HEIGHT))
+
 pygame.display.set_caption("Gravitation Slingshot Effect")
 pygame.display.set_icon(pygame.image.load("assets/jupiter.png"))
 
-# class Planet:
-#     def __init__(self, x, y, mass):
-#         self.x = x
-#         self.y = y
-#         self.mass = mass
-    
-#     def draw(self):
-#         disp.blit(PLANET, (self.x - PLANET_SIZE, self.y - PLANET_SIZE))
 
 def create_ship(Location, mouse):
     t_x, t_y = Location
